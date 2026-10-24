@@ -5,7 +5,8 @@ small personal addons for wow
 
 `SKDUIscale` is a World of Warcraft addon that lets you set the UI scale from
 `0.40` to `1.00`, below the minimum available in Interface Options. It applies
-the selected scale at login and saves it between sessions.
+the selected scale at login and saves it between sessions. Its TOC lists support
+for Retail and Classic Era clients.
 
 Copy the `SKDUIscale` folder (containing `SKDUIscale.toc` and `SKDUIscale.lua`) into your
 WoW installation's `Interface\AddOns` directory. Log in and enter `/SKDUIscale` to

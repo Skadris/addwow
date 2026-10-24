@@ -1,4 +1,4 @@
-## Interface: 120000
+## Interface: 120105, 11509
 ## Title: SKDUIscale
 ## Notes: Set the UI scale below the Interface Options minimum.
 ## Author: Skadris
