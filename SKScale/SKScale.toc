@@ -1,0 +1,8 @@
+## Interface: 120000
+## Title: SKDUIscale
+## Notes: Set the UI scale below the Interface Options minimum.
+## Author: Skadris
+## Version: 1.0.0
+## SavedVariables: SKDUIscaleDB
+
+SKDUIscale.lua
