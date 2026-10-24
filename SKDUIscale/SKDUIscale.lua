@@ -27,8 +27,11 @@ local description = panel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 description:SetPoint("TOPLEFT", panel, "TOPLEFT", 20, -40)
 description:SetText("UI scale")
 
-local valueText = panel:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-valueText:SetPoint("TOPRIGHT", panel, "TOPRIGHT", -20, -40)
+local valueInput = CreateFrame("EditBox", "SKDUIscaleValueInput", panel, "InputBoxTemplate")
+valueInput:SetSize(70, 24)
+valueInput:SetPoint("TOPRIGHT", panel, "TOPRIGHT", -24, -32)
+valueInput:SetAutoFocus(false)
+valueInput:SetMaxLetters(5)
 
 local slider = CreateFrame("Slider", "SKDUIscaleSlider", panel, "OptionsSliderTemplate")
 slider:SetPoint("TOPLEFT", panel, "TOPLEFT", 30, -70)
@@ -40,6 +43,10 @@ slider.Low:SetText("0.4")
 slider.High:SetText("1.0")
 slider.Text:SetText("")
 
+local function showScaleValue(value)
+    valueInput:SetText(string.format("%.2f", value))
+end
+
 local resetButton = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
 resetButton:SetSize(100, 24)
 resetButton:SetPoint("BOTTOM", panel, "BOTTOM", 0, 14)
@@ -50,8 +57,31 @@ end)
 
 slider:SetScript("OnValueChanged", function(self, value)
     value = math.floor(value * 100 + 0.5) / 100
-    valueText:SetText(string.format("%.2f", value))
+    showScaleValue(value)
     applyScale(value)
+end)
+
+local function commitScaleInput()
+    local value = tonumber(valueInput:GetText())
+    if not value then
+        showScaleValue(slider:GetValue())
+        return
+    end
+
+    value = math.floor(clampScale(value) * 100 + 0.5) / 100
+    slider:SetValue(value)
+    showScaleValue(value)
+    applyScale(value)
+end
+
+valueInput:SetScript("OnEnterPressed", function(self)
+    commitScaleInput()
+    self:ClearFocus()
+end)
+valueInput:SetScript("OnEditFocusLost", commitScaleInput)
+valueInput:SetScript("OnEscapePressed", function(self)
+    showScaleValue(slider:GetValue())
+    self:ClearFocus()
 end)
 
 local eventFrame = CreateFrame("Frame")
@@ -64,6 +94,7 @@ eventFrame:SetScript("OnEvent", function()
     local savedScale = tonumber(SKDUIscaleDB.scale) or DEFAULT_SCALE
     applyScale(savedScale)
     slider:SetValue(clampScale(savedScale))
+    showScaleValue(clampScale(savedScale))
 end)
 
 SLASH_SKDUIscale1 = "/SKDUIscale"

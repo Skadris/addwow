@@ -9,5 +9,6 @@ the selected scale at login and saves it between sessions.
 
 Copy the `SKDUIscale` folder (containing `SKDUIscale.toc` and `SKDUIscale.lua`) into your
 WoW installation's `Interface\AddOns` directory. Log in and enter `/SKDUIscale` to
-open the movable scale panel. Use the slider to adjust the scale or select
-**Reset to 1.0** to restore the default.
+open the movable scale panel. Adjust the scale with the slider or type a value
+between `0.40` and `1.00` in the input box and press Enter. Values outside that
+range are clamped. Select **Reset to 1.0** to restore the default.
